@@ -1,0 +1,68 @@
+
+
+
+.UserLabelAvatar {
+    max-height: 24px;
+}
+.UserLabel {
+    display: flex;
+    justify-content: flex-start;
+    border: black 1px solid;
+}
+
+.ChatContainer {
+  height: 40em;
+  overflow-y: scroll;
+}
+
+.Post {
+  display: flex;
+  padding: 0.2em;
+  border: black 1px solid;
+}
+.PostAvatarContainer {
+  margin-right: 0.5em;
+  min-width: 40px;
+}
+.PostAvatarImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.PostMessageContent {
+  width: 100%;
+  line-height: 150%;
+}
+.PostContentContainer {
+  width: 100%;
+  text-align: left;
+}
+.PostInfoContainer {
+  border-bottom: black 1px dotted;
+}
+.PostInfoName {
+  margin-right:0.2em;
+  font-weight:bold;
+}
+.PostInfoTime {
+  font-weight:lighter;
+}
+
+
+
+
+
+.ChatInput {
+  min-width: 100%;
+}
+.ChatInputField {
+  min-width: 100%;
+}
+
+
+.Header {
+  min-width: 100%;
+}
+.Login {
+  min-width: 100%;
+}
