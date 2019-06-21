@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.19.0",
     "http2": "^3.3.7",
     "mongoose": "^5.5.8",
     "pg": "^7.11.0",

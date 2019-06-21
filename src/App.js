@@ -35,6 +35,7 @@ export default class App extends Component {
       allUsers: [],
       allPostData: [],
     };
+
     //console.log('CURRENT USER LIST AFTER INIT'+this.state.allUsers);
   }
   componentDidMount() {
@@ -56,17 +57,20 @@ export default class App extends Component {
   }
 
   signIn(username, password) {
-    var requestData = {username: 'test', password: 'pass'}
-    request({
-      url: 'http://localhost:5000/logIn',
-      method: 'POST',
-      headers: {
-        "content-type": "application/json",
+    var requestData = {
+      username: username,
+      password: password
+    }
+    request(
+      {
+        method: 'POST',
+        url: 'http://localhost:5000/newUser',
+        json: requestData,
       },
-      body: requestData,
-    }, function (error, res, body) {
-      console.log("done")
-    })
+      function (err, httpResponse, body) {
+        console.log(body);
+      }
+    );
   }
 
   addUserTest = () => {
