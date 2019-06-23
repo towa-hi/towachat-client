@@ -21,7 +21,7 @@ export default class Chat extends Component {
   render() {
     return(
       <Container className='ChatContainer'>
-        {this.props.allPostData.map(postData => <Post postData={postData} key={postData.id}/>)}
+        {this.props.allPostData.map(postData => <Post postData={postData} key={postData.time}/>)}
         <div ref={BottomOfChat => {this.BottomOfChat = BottomOfChat;}}/>
       </Container>
     )
