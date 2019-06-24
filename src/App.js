@@ -9,21 +9,7 @@ import ChatInput from './components/chatInput.js';
 import Login from './components/login.js';
 import request from 'request';
 
-const openSocket = require('socket.io-client');
-const socket = openSocket('http://localhost:5000');
 
-socket.on('connect',doConnect);
-socket.on('newMessage', doMessage);
-
-function doConnect() {
-
-  console.log('socket connected');
-}
-
-function doMessage(message) {
-  console.log('got new message:')
-  console.log(message);
-}
 
 const mockUser = {
   name:'mockUsername',
@@ -47,8 +33,25 @@ export default class App extends Component {
     //console.log('CURRENT USER LIST AFTER INIT'+this.state.allUsers);
   }
   componentDidMount() {
+    const openSocket = require('socket.io-client');
+    const socket = openSocket('http://localhost:5000');
     this.callApi('/startingState').then(res => this.setState(res)).catch(err => console.log(err));
+    socket.on('connect',this.doConnect);
+    socket.on('newMessage', this.doMessage);
 
+  }
+
+  doConnect = () => {
+    console.log('socket connected');
+  }
+
+
+  doMessage = (message) => {
+    console.log('got new message:')
+    console.log(message);
+    this.setState({
+      allPostData: [...this.state.allPostData, message]
+    })
   }
 
   makePost() {
