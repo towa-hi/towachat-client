@@ -45,32 +45,11 @@ export default class App extends Component {
     console.log('socket connected');
   }
 
-
   doMessage = (message) => {
-    console.log('got new message:')
-    console.log(message);
+    console.log('got new message:' + message);
     this.setState({
       allPostData: [...this.state.allPostData, message]
     })
-  }
-
-  makePost() {
-    console.log('making post')
-    var messageObject = {
-      user: 'admin1',
-      postText: 'benis',
-    };
-    request(
-      {
-        method: 'POST',
-        url: 'http://localhost:5000/makePost',
-        json: messageObject,
-      },
-      function (err, httpResponse, body) {
-        console.log(body);
-      }
-    );
-
   }
 
   callApi = async(query) => {
@@ -80,11 +59,6 @@ export default class App extends Component {
       throw Error(body.message);
     }
     return body;
-  }
-
-  handleSubmit = async(e) => {
-    e.preventDefault();
-
   }
 
   signIn(username, password) {
@@ -133,14 +107,23 @@ export default class App extends Component {
       console.log('USER NOT FOUND TO REMOVE');
     }
   }
-  addPost = (newPost) => {
-    this.setState({
-      allPostData: [...this.state.allPostData, newPost]
-    })
-  }
 
-  sendMessage = (text) => {
-    this.handleSubmit();
+  sendMessage = (messageString) => {
+    console.log('sendMessage: ' + messageString)
+    var messageObject = {
+      user: 'admin1',
+      postText: messageString,
+    };
+    request(
+      {
+        method: 'POST',
+        url: 'http://localhost:5000/makePost',
+        json: messageObject,
+      },
+      function (err, httpResponse, body) {
+        console.log(body);
+      }
+    );
   }
 
   render() {
@@ -149,7 +132,7 @@ export default class App extends Component {
       <div className='App'>
         <Container>
           <Row className='TopPanel'>
-            <Topbar currentUser = {this.state.currentUser}/><button onClick={this.makePost}>make post</button>
+            <Topbar currentUser = {this.state.currentUser}/>
           </Row>
           <Row className='BottomPanel' md={1}>
             <Row className='Header'>
@@ -161,7 +144,7 @@ export default class App extends Component {
               </Col>
               <Col className='RightPanel'>
                 <Chat allPostData = {this.state.allPostData}/>
-                <ChatInput sendMessage = {this.sendMessage}/>
+                <ChatInput sendMessage = {this.sendMessage.bind(this)}/>
               </Col>
             </Row>
           </Row>

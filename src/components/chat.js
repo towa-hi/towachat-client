@@ -15,13 +15,22 @@ export default class Chat extends Component {
   scrollToBottom() {
     this.BottomOfChat.scrollIntoView({behavior: 'smooth'});
   }
-  shouldMergePost() {
-
+  shouldMergePost(currentPost, index) {
+    if (index > 0) {
+      var previousPost = this.props.allPostData[index - 1];
+      if (currentPost.user.username === previousPost.user.username) {
+        if (currentPost.time - previousPost.time < 3600000) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
+
   render() {
     return(
       <Container className='ChatContainer'>
-        {this.props.allPostData.map(postData => <Post postData={postData} key={postData.time}/>)}
+        {this.props.allPostData.map((postData, index) => <Post postData={postData} key={postData.time} shouldMerge={this.shouldMergePost(postData, index)}/> )}
         <div ref={BottomOfChat => {this.BottomOfChat = BottomOfChat;}}/>
       </Container>
     )

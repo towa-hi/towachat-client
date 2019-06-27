@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+const GLOBAL_MESSAGE_CHAR_LIMIT = 1000;
 export default class chatInput extends Component {
   constructor() {
     super()
@@ -9,16 +10,19 @@ export default class chatInput extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(event) {
+    if (this.state.message.length < GLOBAL_MESSAGE_CHAR_LIMIT)
     this.setState({
       message: event.target.value,
     });
   }
   handleSubmit(event) {
     event.preventDefault()
-    this.props.sendMessage(this.state.message);
+    if (this.state.message !== '') {
+      this.props.sendMessage(this.state.message);
+    }
     this.setState({
       message:'',
-    });
+    })
   }
 
   render() {

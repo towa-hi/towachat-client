@@ -8,10 +8,40 @@ export default class Post extends Component {
       postText: this.props.postData.postText,
       user: this.props.postData.user,
       time: this.props.postData.time,
+      merged: this.props.shouldMerge,
     }
+  }
+  setMerged(bool) {
+    this.setState({merged: bool});
+  }
+
+  mergedTime(timestamp) {
+    var time = new Date(timestamp);
+    var timeString = this.zeroAppender(time.getHours()) + ':' + this.zeroAppender(time.getMinutes());
+    return timeString;
+  }
+
+  fullTime(timestamp) {
+    var time = new Date(timestamp);
+    return time.toLocaleString();
+  }
+
+  zeroAppender(time) {
+    if (time < 10) {
+      return('0' + time);
+    }
+    return time;
   }
 
   render() {
+
+    if (this.state.merged === true) {
+      return(
+        <div className='MergedPost'>
+          <span className='MergedPostTime' title={this.fullTime(this.state.time)}>{this.mergedTime(this.state.time)}</span><span className='PostText'>{this.state.postText}</span>
+        </div>
+      )
+    }
     return(
       <div className='Post'>
         <div className='PostAvatarContainer'>
@@ -20,25 +50,14 @@ export default class Post extends Component {
         <div className='PostContentContainer'>
           <div className='PostInfoContainer'>
             <span className='PostInfoName'>{this.state.user.username}</span>
-            <span className='PostInfoTime'>{this.state.time}</span>
+            <span className='PostInfoTime'>{this.fullTime(this.state.time)}</span>
           </div>
           <div className='PostMessageContent'>
-            <span className='PostText'>{this.state.postText}</span>
+            <span className='PostText'>{this.state.postText}{this.props.shouldMerge}</span>
           </div>
         </div>
       </div>
     )
+
   }
 }
-// <div className='PostAvatarContainer'>
-//   <img className='PostAvatarImg' src={this.props.postData.user.avatar} alt={this.props.postData.user.name} />
-// </div>
-// <div className='PostContentContainer'>
-//   <div className='PostInfoContainer'>
-//     <span className='PostInfoName'>{this.props.postData.user.name}</span>
-//     <span className='PostInfoTime'>{this.props.postData.time}</span>
-//   </div>
-//   <div className='PostMessageContent'>
-//     <span className='PostText'>{this.props.postData.postText}</span>
-//   </div>
-// </div>
